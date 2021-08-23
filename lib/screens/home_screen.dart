@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:offline_first_app_flutter/components/atoms/text.dart';
 import 'package:offline_first_app_flutter/constants/colors.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -20,7 +21,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('Offline first app'),
+                TextWidget.title('Offline first app'),
               ],
             ),
           ),
