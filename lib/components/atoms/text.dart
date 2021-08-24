@@ -1,34 +1,47 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 enum TextType { title, paragraph }
 
-class TextWidget extends StatelessWidget {
+class CustomText extends StatelessWidget {
   final String text;
   final TextStyle? style;
   final TextType type;
 
-  const TextWidget(this.text,
-      {Key? key, this.style, this.type = TextType.paragraph})
-      : super(key: key);
+  const CustomText(
+    this.text, {
+    Key? key,
+    this.style,
+    this.type = TextType.paragraph,
+  }) : super(key: key);
 
-  const TextWidget.title(this.text,
-      {Key? key, this.style, this.type = TextType.title})
-      : super(key: key);
+  const CustomText.title(
+    this.text, {
+    Key? key,
+    this.style,
+    this.type = TextType.title,
+  }) : super(key: key);
 
-  const TextWidget.paragraph(this.text,
-      {Key? key, this.style, this.type = TextType.paragraph})
-      : super(key: key);
+  const CustomText.paragraph(
+    this.text, {
+    Key? key,
+    this.style,
+    this.type = TextType.paragraph,
+  }) : super(key: key);
 
   TextStyle _getTextSize() {
     if (type == TextType.title) {
-      return TextStyle(fontSize: 26);
+      return TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w600,
+      );
     }
-    return TextStyle(fontSize: 18);
+    return TextStyle(fontSize: 16);
   }
 
   TextStyle _getStyle() {
     if (style != null) {
-      return style!.merge(_getTextSize());
+      return _getTextSize().merge(style);
     }
     return _getTextSize();
   }
