@@ -17,6 +17,9 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final GlobalKey key = GlobalKey();
     return Dismissible(
+      onDismissed: (DismissDirection dismiss) {
+        if (dismiss == DismissDirection.endToStart) onDismiss!();
+      },
       key: key,
       direction: _getDismissDirection(),
       child: Card(

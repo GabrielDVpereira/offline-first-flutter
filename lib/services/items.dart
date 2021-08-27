@@ -6,8 +6,15 @@ class ItemService {
   final Uri url = Uri.parse('http://localhost:5000/items');
   final Map<String, String> headers = {'Content-Type': 'application/json'};
 
+  Uri _getUri({String? id}) {
+    if (id != null) {
+      return Uri.parse('http://localhost:5000/items/$id');
+    }
+    return Uri.parse('http://localhost:5000/items');
+  }
+
   Future<List<Item>> fetchItems() async {
-    final response = await http.get(url);
+    final response = await http.get(_getUri());
 
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body) as List;
@@ -20,14 +27,17 @@ class ItemService {
 
   Future<Item> createItem(Item item) async {
     final response = await http.post(
-      url,
+      _getUri(),
       body: jsonEncode(item.toJson()),
       headers: headers,
     );
-    print(response.statusCode);
     if (response.statusCode == 201) {
       return item;
     }
     throw Exception('error creating items');
+  }
+
+  Future<void> deleteItem(double id) async {
+    await http.delete(_getUri(id: id.toString()));
   }
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:offline_first_app_flutter/bloc/item_bloc.dart';
+import 'package:offline_first_app_flutter/bloc/item_event.dart';
 import 'package:offline_first_app_flutter/bloc/item_state.dart';
 import 'package:offline_first_app_flutter/components/atoms/text.dart';
 import 'package:offline_first_app_flutter/components/molecule/item_card.dart';
+import 'package:offline_first_app_flutter/models/item.dart';
 
 class ItemList extends StatefulWidget {
   const ItemList({Key? key}) : super(key: key);
@@ -25,7 +27,6 @@ class _ItemListState extends State<ItemList> {
   Widget build(BuildContext context) {
     return BlocBuilder<ItemBloc, ItemState>(
       builder: (context, state) {
-        print(state.items);
         if (state.status == ItemStatus.success) {
           return Container(
             width: double.infinity,
@@ -39,8 +40,11 @@ class _ItemListState extends State<ItemList> {
                 ListView.builder(
                   itemBuilder: (BuildContext context, int i) {
                     return ItemCard(
-                        title: state.items[i].title,
-                        description: state.items[i].description);
+                      item: state.items[i],
+                      onDismiss: (Item item) {
+                        _itemBloc.add(ItemDelete(id: item.id));
+                      },
+                    );
                   },
                   itemCount: state.items.length,
                   shrinkWrap: true,

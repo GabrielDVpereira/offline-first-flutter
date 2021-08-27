@@ -12,3 +12,8 @@ class ItemCreate extends ItemEvent {
   final Item item;
   ItemCreate({required this.item});
 }
+
+class ItemDelete extends ItemEvent {
+  final double id;
+  ItemDelete({required this.id});
+}

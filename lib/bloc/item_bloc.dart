@@ -14,6 +14,8 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
       yield await _mapItemsFetchedToState(state);
     } else if (event is ItemCreate) {
       yield await _mapItemsCreateToState(state, event.item);
+    } else if (event is ItemDelete) {
+      yield await _mapItemsDeleteToState(state, event.id);
     }
   }
 
@@ -33,6 +35,17 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
     try {
       final newItem = await service.createItem(item);
       final newItems = [...state.items, newItem];
+      return state.copyWith(items: newItems);
+    } on Exception {
+      return state.copyWith(status: ItemStatus.failure);
+    }
+  }
+
+  Future<ItemState> _mapItemsDeleteToState(ItemState state, double id) async {
+    print('cfdsoncjd');
+    try {
+      await service.deleteItem(id);
+      final newItems = state.items.where((item) => item.id != id).toList();
       return state.copyWith(items: newItems);
     } on Exception {
       return state.copyWith(status: ItemStatus.failure);
