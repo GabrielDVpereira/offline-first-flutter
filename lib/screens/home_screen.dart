@@ -6,8 +6,12 @@ import 'package:offline_first_app_flutter/constants/colors.dart';
 import 'package:offline_first_app_flutter/utils/modal.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final List<Map<String, dynamic>> items = [
+    {"title": 'Title', "description": 'teste'},
+    {"title": 'Title', "description": 'teste'},
+  ];
 
+  HomeScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,8 +25,11 @@ class HomeScreen extends StatelessWidget {
               SizedBox(height: 26),
               CustomText.title('Offline first app ✨'),
               SizedBox(height: 20),
-              ItemCard(title: 'Title', description: 'teste'),
-              ItemCard(title: 'Title', description: 'teste')
+              ItemCard(title: 'Title', description: 'teste', onDismiss: () {}),
+              ItemCard(title: 'Title', description: 'teste', onDismiss: () {}),
+              ItemCard(title: 'Title', description: 'teste', onDismiss: () {}),
+              ItemCard(title: 'Title', description: 'teste', onDismiss: () {}),
+              ItemCard(title: 'Title', description: 'teste', onDismiss: () {}),
             ],
           ),
         ),
