@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:offline_first_app_flutter/screens/home_screen.dart';
 
+import 'bloc/observer.dart';
 import 'constants/colors.dart';
 
 void main() {
+  Bloc.observer = SimpleBlocObserver();
   runApp(App());
 }
 

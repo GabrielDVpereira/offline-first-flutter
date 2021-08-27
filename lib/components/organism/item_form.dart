@@ -1,30 +1,65 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:offline_first_app_flutter/components/atoms/button.dart';
 import 'package:offline_first_app_flutter/components/atoms/input.dart';
 import 'package:offline_first_app_flutter/components/atoms/text.dart';
+import 'package:offline_first_app_flutter/models/item.dart';
 
 class ItemForm extends StatelessWidget {
-  const ItemForm({Key? key}) : super(key: key);
+  String? title;
+  String? description;
+  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
+  final void Function(Item item) onSubmit;
+  ItemForm({
+    Key? key,
+    required this.onSubmit,
+  }) : super(key: key);
+
+  void _onSubmit(BuildContext context) {
+    formkey.currentState?.save();
+    Item item = Item(
+      id: Random().nextDouble(),
+      description: description ?? '',
+      title: title ?? '',
+    );
+    onSubmit(item);
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        CustomText.title(
-          'New Item',
-          style: TextStyle(fontSize: 16),
-        ),
-        SizedBox(height: 20),
-        CustomInput(placeholder: 'Item title'),
-        SizedBox(height: 10),
-        CustomInput(placeholder: 'Item description'),
-        SizedBox(height: 20),
-        CustomButton(
-          description: 'Create Item',
-          onPressed: () {},
-        ),
-      ],
+    return Form(
+      key: formkey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CustomText.title(
+            'New Item',
+            style: TextStyle(fontSize: 16),
+          ),
+          SizedBox(height: 20),
+          CustomInput(
+            placeholder: 'Item title',
+            onSaved: (value) {
+              title = value;
+            },
+          ),
+          SizedBox(height: 10),
+          CustomInput(
+            placeholder: 'Item description',
+            onSaved: (value) {
+              description = value;
+            },
+          ),
+          SizedBox(height: 20),
+          CustomButton(
+            description: 'Create Item',
+            onPressed: () => _onSubmit(context),
+          ),
+        ],
+      ),
     );
   }
 }

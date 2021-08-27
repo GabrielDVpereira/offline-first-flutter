@@ -3,11 +3,15 @@ import 'package:offline_first_app_flutter/constants/colors.dart';
 
 class CustomInput extends StatelessWidget {
   final String placeholder;
-  const CustomInput({required this.placeholder, Key? key}) : super(key: key);
+  final void Function(String?) onSaved;
+  const CustomInput(
+      {required this.placeholder, required this.onSaved, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onSaved: onSaved,
       decoration: InputDecoration(
         border: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(10),
