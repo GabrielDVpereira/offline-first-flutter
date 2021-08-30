@@ -42,7 +42,6 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
   }
 
   Future<ItemState> _mapItemsDeleteToState(ItemState state, double id) async {
-    print('cfdsoncjd');
     try {
       await service.deleteItem(id);
       final newItems = state.items.where((item) => item.id != id).toList();

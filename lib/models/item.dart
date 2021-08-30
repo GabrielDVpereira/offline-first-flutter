@@ -4,8 +4,14 @@ class Item extends Equatable {
   final double id;
   final String title;
   final String description;
+  bool isOffline;
 
-  Item({required this.id, required this.description, required this.title});
+  Item({
+    required this.id,
+    required this.description,
+    required this.title,
+    this.isOffline = false,
+  });
 
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(

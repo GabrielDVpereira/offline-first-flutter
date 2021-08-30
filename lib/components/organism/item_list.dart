@@ -23,6 +23,24 @@ class _ItemListState extends State<ItemList> {
     _itemBloc = context.read<ItemBloc>();
   }
 
+  Widget _renderListOrEmptyMessge(List<Item> items) {
+    if (items.isEmpty) {
+      return Text("You don't have any items");
+    }
+    return ListView.builder(
+      itemBuilder: (BuildContext context, int i) {
+        return ItemCard(
+          item: items[i],
+          onDismiss: (Item item) {
+            _itemBloc.add(ItemDelete(id: item.id));
+          },
+        );
+      },
+      itemCount: items.length,
+      shrinkWrap: true,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ItemBloc, ItemState>(
@@ -37,18 +55,7 @@ class _ItemListState extends State<ItemList> {
                 SizedBox(height: 26),
                 CustomText.title('Offline first app ✨'),
                 SizedBox(height: 20),
-                ListView.builder(
-                  itemBuilder: (BuildContext context, int i) {
-                    return ItemCard(
-                      item: state.items[i],
-                      onDismiss: (Item item) {
-                        _itemBloc.add(ItemDelete(id: item.id));
-                      },
-                    );
-                  },
-                  itemCount: state.items.length,
-                  shrinkWrap: true,
-                )
+                _renderListOrEmptyMessge(state.items)
               ],
             ),
           );
