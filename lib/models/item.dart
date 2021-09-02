@@ -15,19 +15,21 @@ class Item extends Equatable {
 
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(
-      id: json['id'],
-      description: json['description'],
-      title: json['title'],
+      id: json['id'] as double,
+      description: json['description'] as String,
+      title: json['title'] as String,
     );
   }
 
   Map<String, dynamic> toJson() {
+    print('teste');
     return {
-      'id': this.id,
-      'description': this.description,
-      'title': this.title,
+      'id': id,
+      'description': description,
+      'title': title,
     };
   }
 
+  @override
   List<Object> get props => [id, title, description];
 }

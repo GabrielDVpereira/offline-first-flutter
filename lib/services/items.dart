@@ -19,7 +19,7 @@ class ItemService {
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body) as List;
       return body.map((dynamic json) {
-        return Item.fromJson(json);
+        return Item.fromJson(json as Map<String, dynamic>);
       }).toList();
     }
     throw Exception('error fetching items');
