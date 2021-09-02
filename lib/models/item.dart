@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class Item extends Equatable {
   final double id;
   final String title;
@@ -22,7 +23,6 @@ class Item extends Equatable {
   }
 
   Map<String, dynamic> toJson() {
-    print('teste');
     return {
       'id': id,
       'description': description,

@@ -7,7 +7,7 @@ class CustomCard extends StatelessWidget {
       : super(key: key);
 
   DismissDirection _getDismissDirection() {
-    if (this.onDismiss != null) {
+    if (onDismiss != null) {
       return DismissDirection.endToStart;
     }
     return DismissDirection.none;

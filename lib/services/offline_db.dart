@@ -5,7 +5,7 @@ import 'package:offline_first_app_flutter/interfaces/db/update.dart';
 
 class OfflineDb implements DbCreate, DbGet, DbUpdate {
   final String dbName;
-  var instance;
+  dynamic instance;
 
   OfflineDb(this.dbName) {
     _openDB();
@@ -19,14 +19,17 @@ class OfflineDb implements DbCreate, DbGet, DbUpdate {
     instance = await Hive.openBox(dbName);
   }
 
+  @override
   void create(String key, dynamic data) {
     instance.put(key, data);
   }
 
+  @override
   dynamic get(String key) {
     return instance.get(key);
   }
 
+  @override
   void update(String key, dynamic data) {
     instance.put(key, data);
   }

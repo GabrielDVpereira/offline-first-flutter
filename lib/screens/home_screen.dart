@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => itemBloc..add(ItemFetched()),
       child: Scaffold(
-        body: SafeArea(child: ItemList()),
+        body: const SafeArea(child: ItemList()),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             openModal(

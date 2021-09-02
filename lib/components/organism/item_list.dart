@@ -25,7 +25,7 @@ class _ItemListState extends State<ItemList> {
 
   Widget _renderListOrEmptyMessge(List<Item> items) {
     if (items.isEmpty) {
-      return Text("You don't have any items");
+      return const Text("You don't have any items");
     }
     return ListView.builder(
       itemBuilder: (BuildContext context, int i) {
@@ -48,13 +48,13 @@ class _ItemListState extends State<ItemList> {
         if (state.status == ItemStatus.success) {
           return Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 26),
-                CustomText.title('Offline first app ✨'),
-                SizedBox(height: 20),
+                const SizedBox(height: 26),
+                const CustomText.title('Offline first app ✨'),
+                const SizedBox(height: 20),
                 _renderListOrEmptyMessge(state.items)
               ],
             ),

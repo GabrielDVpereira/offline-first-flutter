@@ -31,12 +31,12 @@ class CustomText extends StatelessWidget {
 
   TextStyle _getTextSize() {
     if (type == TextType.title) {
-      return TextStyle(
+      return const TextStyle(
         fontSize: 22,
         fontWeight: FontWeight.w600,
       );
     }
-    return TextStyle(fontSize: 16);
+    return const TextStyle(fontSize: 16);
   }
 
   TextStyle _getStyle() {

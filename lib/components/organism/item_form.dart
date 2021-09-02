@@ -6,6 +6,7 @@ import 'package:offline_first_app_flutter/components/atoms/input.dart';
 import 'package:offline_first_app_flutter/components/atoms/text.dart';
 import 'package:offline_first_app_flutter/models/item.dart';
 
+// ignore: must_be_immutable
 class ItemForm extends StatelessWidget {
   String? title;
   String? description;
@@ -35,25 +36,25 @@ class ItemForm extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CustomText.title(
+          const CustomText.title(
             'New Item',
             style: TextStyle(fontSize: 16),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           CustomInput(
             placeholder: 'Item title',
             onSaved: (value) {
               title = value;
             },
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           CustomInput(
             placeholder: 'Item description',
             onSaved: (value) {
               description = value;
             },
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           CustomButton(
             description: 'Create Item',
             onPressed: () => _onSubmit(context),

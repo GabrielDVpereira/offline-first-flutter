@@ -37,14 +37,14 @@ class ItemCard extends StatelessWidget {
       children: [
         CustomText.title(
           item.title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
           ),
         ),
         const SizedBox(height: 8),
         CustomText.paragraph(
           item.description,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 14,
           ),
         ),
