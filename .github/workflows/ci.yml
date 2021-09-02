@@ -1,4 +1,4 @@
-name: SWFast-github-action
+name: Frontend ci
 
 on: [pull_request, push]
 
