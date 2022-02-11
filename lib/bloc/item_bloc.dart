@@ -1,53 +1,55 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:offline_first_app_flutter/bloc/item_event.dart';
 import 'package:offline_first_app_flutter/bloc/item_state.dart';
-import 'package:offline_first_app_flutter/models/item.dart';
 import 'package:offline_first_app_flutter/services/items.dart';
 
 class ItemBloc extends Bloc<ItemEvent, ItemState> {
   final ItemService service;
-  ItemBloc({required this.service}) : super(const ItemState());
-
-  @override
-  Stream<ItemState> mapEventToState(ItemEvent event) async* {
-    if (event is ItemFetched) {
-      yield await _mapItemsFetchedToState(state);
-    } else if (event is ItemCreate) {
-      yield await _mapItemsCreateToState(state, event.item);
-    } else if (event is ItemDelete) {
-      yield await _mapItemsDeleteToState(state, event.id);
-    }
+  ItemBloc({required this.service}) : super(const ItemState()) {
+    on<ItemFetched>(_onItemsFetched);
+    on<ItemCreate>(_onItemsCreate);
+    on<ItemDelete>(_onItemsDelete);
   }
 
-  Future<ItemState> _mapItemsFetchedToState(ItemState state) async {
+  _onItemsFetched(
+    ItemFetched event,
+    Emitter<ItemState> emit,
+  ) async {
     try {
       final items = await service.fetchItems();
-      return state.copyWith(
+      emit(state.copyWith(
         status: ItemStatus.success,
         items: items,
-      );
+      ));
     } on Exception {
-      return state.copyWith(status: ItemStatus.failure);
+      emit(state.copyWith(status: ItemStatus.failure));
     }
   }
 
-  Future<ItemState> _mapItemsCreateToState(ItemState state, Item item) async {
+  _onItemsCreate(
+    ItemCreate event,
+    Emitter<ItemState> emit,
+  ) async {
     try {
-      final newItem = await service.createItem(item);
+      final newItem = await service.createItem(event.item);
       final newItems = [...state.items, newItem];
-      return state.copyWith(items: newItems);
+      emit(state.copyWith(items: newItems));
     } on Exception {
-      return state.copyWith(status: ItemStatus.failure);
+      emit(state.copyWith(status: ItemStatus.failure));
     }
   }
 
-  Future<ItemState> _mapItemsDeleteToState(ItemState state, double id) async {
+  _onItemsDelete(
+    ItemDelete event,
+    Emitter<ItemState> emit,
+  ) async {
     try {
-      await service.deleteItem(id);
-      final newItems = state.items.where((item) => item.id != id).toList();
-      return state.copyWith(items: newItems);
+      await service.deleteItem(event.id);
+      final newItems =
+          state.items.where((item) => item.id != event.id).toList();
+      emit(state.copyWith(items: newItems));
     } on Exception {
-      return state.copyWith(status: ItemStatus.failure);
+      emit(state.copyWith(status: ItemStatus.failure));
     }
   }
 }
