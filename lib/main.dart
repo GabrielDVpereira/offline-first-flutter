@@ -1,14 +1,12 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:offline_first_app_flutter/helpers/connection_helper.dart';
 import 'package:offline_first_app_flutter/screens/home_screen.dart';
 import 'package:offline_first_app_flutter/services/offline_db.dart';
 
-import 'bloc/observer.dart';
 import 'constants/colors.dart';
 
 void main() async {
-  Bloc.observer = SimpleBlocObserver();
   await OfflineDb.setupDB();
   runApp(const App());
 }
@@ -23,7 +21,8 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   void initState() {
-    ConectionHelper().checkConnection();
+    Connection().listen(
+        (connectioData) => print(connectioData == ConnectivityResult.mobile));
     super.initState();
   }
 

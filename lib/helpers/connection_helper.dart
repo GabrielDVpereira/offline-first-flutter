@@ -1,12 +1,19 @@
 import 'dart:async';
 
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:data_connection_checker/data_connection_checker.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
-class ConectionHelper {
-  StreamSubscription<DataConnectionStatus>? listener;
+class Connection {
+  StreamSubscription<ConnectivityResult>? subscription;
 
-  checkConnection() async {
-    listener = DataConnectionChecker().onStatusChange.listen((status) {});
+  listen(Function(ConnectivityResult) cb) {
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      cb(result);
+    });
+  }
+
+  removeListener() {
+    subscription!.cancel();
   }
 }
